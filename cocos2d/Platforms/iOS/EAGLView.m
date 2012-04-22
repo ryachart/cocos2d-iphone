@@ -263,7 +263,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	CCLOG(@"cocos2d: Failed to swap renderbuffer in %s\n", __FUNCTION__);
 
 #if COCOS2D_DEBUG
-	CHECK_GL_ERROR();
+	//CHECK_GL_ERROR();
 #endif
 	
 	// We can safely re-bind the framebuffer here, since this will be the
