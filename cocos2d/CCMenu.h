@@ -60,7 +60,7 @@ enum {
 
 /** initializes a CCMenu with it's items */
 - (id) initWithItems: (CCMenuItem*) item vaList: (va_list) args;
-
+- (id) initWithItem:(CCMenuItem*)item;
 /** align items vertically */
 -(void) alignItemsVertically;
 /** align items vertically with padding
