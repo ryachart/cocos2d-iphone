@@ -65,6 +65,46 @@ enum {
 	return s;
 }
 
+-(id)initWithItem:(CCMenuItem*)item{
+    if (self = [super init]){
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+		self.isTouchEnabled = YES;
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+		self.isMouseEnabled = YES;
+#endif
+		
+		// menu in the center of the screen
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		
+		self.isRelativeAnchorPoint = NO;
+		anchorPoint_ = ccp(0.5f, 0.5f);
+		[self setContentSize:s];
+		
+		// XXX: in v0.7, winSize should return the visible size
+		// XXX: so the bar calculation should be done there
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+		CGRect r = [[UIApplication sharedApplication] statusBarFrame];
+		ccDeviceOrientation orientation = [[CCDirector sharedDirector] deviceOrientation];
+		if( orientation == CCDeviceOrientationLandscapeLeft || orientation == CCDeviceOrientationLandscapeRight )
+			s.height -= r.size.width;
+		else
+			s.height -= r.size.height;
+#endif
+		self.position = ccp(s.width/2, s.height/2);
+        
+		int z=0;
+		
+		if (item) {
+			[self addChild: item z:z];
+		}
+        //	[self alignItemsVertically];
+		
+		selectedItem_ = nil;
+		state_ = kCCMenuStateWaiting;
+	}
+    return self;
+}
+
 -(id) init
 {
 	return [self initWithArray:nil];
