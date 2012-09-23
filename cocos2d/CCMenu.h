@@ -69,7 +69,7 @@ enum {
 /** initializes a CCMenu with its items */
 - (id) initWithItems: (CCMenuItem*) item vaList: (va_list) args;
 
-- (id) initWithItem:(CCMenuItem*)item;
+//- (id) initWithItem:(CCMenuItem*)item;
 
 /** initializes a CCMenu with a NSArray of CCMenuItem objects */
 - (id) initWithArray:(NSArray*)arrayOfItems;

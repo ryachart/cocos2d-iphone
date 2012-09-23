@@ -129,6 +129,9 @@
 
 - (void) setString:(NSString*)str
 {
+    if (!str){
+        str = @"";
+    }
 	NSAssert( str, @"Invalid string" );
 
 	if( string_.hash != str.hash ) {
