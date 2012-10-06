@@ -113,6 +113,13 @@
 #import "CCMotionStreak.h"
 #import "CCConfiguration.h"
 
+#import "CCScrollView.h"
+#import "CCTableView.h"
+#import "CCTableViewCell.h"
+#import "CCTableViewSpriteCell.h"
+#import "CCMultiColumnTableView.h"
+
+
 // Shaders
 #import "CCGLProgram.h"
 #import "ccGLStateCache.h"

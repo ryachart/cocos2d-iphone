@@ -496,9 +496,18 @@ static NSUInteger globalOrderOfArrival = 1;
 }
 
 #pragma mark CCNode Draw
+- (void) beforeDraw
+{
+    
+}
 
 -(void) draw
 {
+}
+
+- (void) afterDraw
+{
+    
 }
 
 -(void) visit
@@ -509,11 +518,13 @@ static NSUInteger globalOrderOfArrival = 1;
 
 	kmGLPushMatrix();
 
-	if ( grid_ && grid_.active)
+	if ( grid_ && grid_.active) {
 		[grid_ beforeDraw];
+        [self transformAncestors];
+    }
 
 	[self transform];
-
+    [self beforeDraw];
 	if(children_) {
 
 		[self sortAllChildren];
@@ -542,6 +553,7 @@ static NSUInteger globalOrderOfArrival = 1;
 	} else
 		[self draw];
 
+    [self afterDraw];
 	// reset for next frame
 	orderOfArrival_ = 0;
 
