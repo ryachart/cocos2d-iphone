@@ -172,7 +172,7 @@ static NSUInteger globalOrderOfArrival = 1;
 
 - (void) dealloc
 {
-	CCLOGINFO( @"cocos2d: deallocing %@", self);
+	//CCLOGINFO( @"cocos2d: deallocing %@", self);
 
 	[actionManager_ release];
 	[scheduler_ release];
