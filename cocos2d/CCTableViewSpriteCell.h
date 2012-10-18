@@ -1,0 +1,1 @@
+////  SWTableViewSpriteCell.h//  PingPing2////  Created by Sangwoo Im on 10/22/10.//  Copyright 2010 Sangwoo Im. All rights reserved.//#import <Foundation/Foundation.h>#import "CCTableViewCell.h"@class CCSprite;@interface CCTableViewSpriteCell : CCTableViewCell {    CCSprite *_sprite;}@property (nonatomic, retain) CCSprite *sprite;@end

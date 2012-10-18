@@ -198,7 +198,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 
 - (void) dealloc
 {
-	CCLOGINFO(@"cocos2d: deallocing %@", self);
+	//CCLOGINFO(@"cocos2d: deallocing %@", self);
 
 	[shaderProgram_ release];
 

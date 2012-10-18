@@ -409,7 +409,7 @@ static inline NSInteger selectorCompare(id object1,id object2,void *userData){
 
 - (void) dealloc
 {
-	CCLOGINFO(@"cocos2d: deallocing %@", self);
+	//CCLOGINFO(@"cocos2d: deallocing %@", self);
 
 	ccArrayFree(data);
 	[super dealloc];
