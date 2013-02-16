@@ -14081,6 +14081,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_THUMB_SUPPORT = NO;
 				PRODUCT_NAME = CocosDenshion;
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -14092,6 +14093,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_THUMB_SUPPORT = NO;
 				PRODUCT_NAME = CocosDenshion;
+				SKIP_INSTALL = YES;
 				ZERO_LINK = NO;
 			};
 			name = Release;
