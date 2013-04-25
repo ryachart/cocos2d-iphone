@@ -70,6 +70,8 @@
 -(void) rewindBackgroundMusic;
 /** returns whether or not the background music is playing */
 -(BOOL) isBackgroundMusicPlaying;
+/** fades out current background music and fades in the specified music */
+-(void)crossFadeBackgroundMusic:(NSString*) nextFilePath forDuration:(NSTimeInterval)duration;
 
 /** plays an audio effect with a file path*/
 -(ALuint) playEffect:(NSString*) filePath;

@@ -24,6 +24,13 @@
 
 #import "SimpleAudioEngine.h"
 
+@interface SimpleAudioEngine ()
+@property (nonatomic, readwrite) BOOL isCrossfading;
+@property (nonatomic, readwrite) NSTimeInterval crossFadeDuration;
+@property (nonatomic, readwrite) NSTimeInterval crossFadeProgress;
+@property (nonatomic, readwrite) NSString *crossFadeTargetTrackFilePath;
+@end
+
 @implementation SimpleAudioEngine
 
 static SimpleAudioEngine *sharedEngine = nil;
@@ -68,6 +75,7 @@ static CDBufferManager *bufferManager = nil;
 	am = nil;
 	soundEngine = nil;
 	bufferManager = nil;
+    [_crossFadeTargetTrackFilePath release];
 	[super dealloc];
 }
 
@@ -119,6 +127,54 @@ static CDBufferManager *bufferManager = nil;
 
 -(BOOL) willPlayBackgroundMusic {
 	return [am willPlayBackgroundMusic];
+}
+
+-(void)crossFadeBackgroundMusic:(NSString*) nextFilePath forDuration:(NSTimeInterval)duration
+{
+    if (self.isBackgroundMusicPlaying && !self.isCrossfading && self.backgroundMusicVolume > 0.0) {
+        self.isCrossfading = YES;
+        self.crossFadeDuration = duration;
+        self.crossFadeProgress = 0.0;
+        self.crossFadeTargetTrackFilePath = nextFilePath;
+        NSTimer *timer = [NSTimer timerWithTimeInterval:1.0/30.0 target:self selector:@selector(crossFadeTick:) userInfo:nil repeats:YES];
+        [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+    }
+}
+
+-(void)crossFadeTick:(NSTimer*)timer
+{
+    static BOOL didSwitch = NO;
+    NSTimeInterval dt = 1.0/30.0;
+    self.crossFadeProgress += dt;
+    float percentProgress = self.crossFadeProgress / self.crossFadeDuration;
+    float targetVolume = 1.0;
+    
+    if (percentProgress < .5) {
+        targetVolume = 1 - (percentProgress * 2);
+    } else {
+        targetVolume = -1 * (1 - (percentProgress * 2));
+    }
+    
+    self.backgroundMusicVolume = targetVolume;
+    
+    if (percentProgress >= .5) {
+        if (self.crossFadeTargetTrackFilePath && !didSwitch) {
+            [self playBackgroundMusic:self.crossFadeTargetTrackFilePath loop:YES];
+            didSwitch = YES;
+        } else {
+            if (!didSwitch) {
+                [self stopBackgroundMusic];
+            }
+        }
+    }
+    
+    if (self.crossFadeProgress >= self.crossFadeDuration) {
+        self.isCrossfading = NO;
+        self.crossFadeProgress = 0.0;
+        self.crossFadeTargetTrackFilePath = nil;
+        didSwitch = NO;
+        [timer invalidate];
+    }
 }
 
 #pragma mark SimpleAudioEngine - sound effects
