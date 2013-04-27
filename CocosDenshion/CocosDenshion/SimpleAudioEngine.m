@@ -29,6 +29,7 @@
 @property (nonatomic, readwrite) NSTimeInterval crossFadeDuration;
 @property (nonatomic, readwrite) NSTimeInterval crossFadeProgress;
 @property (nonatomic, readwrite) NSString *crossFadeTargetTrackFilePath;
+@property (nonatomic, readwrite) float cachedBackgroundVolume;
 @end
 
 @implementation SimpleAudioEngine
@@ -136,6 +137,7 @@ static CDBufferManager *bufferManager = nil;
         self.crossFadeDuration = duration;
         self.crossFadeProgress = 0.0;
         self.crossFadeTargetTrackFilePath = nextFilePath;
+        self.cachedBackgroundVolume = self.backgroundMusicVolume;
         NSTimer *timer = [NSTimer timerWithTimeInterval:1.0/30.0 target:self selector:@selector(crossFadeTick:) userInfo:nil repeats:YES];
         [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
     }
@@ -150,9 +152,9 @@ static CDBufferManager *bufferManager = nil;
     float targetVolume = 1.0;
     
     if (percentProgress < .5) {
-        targetVolume = 1 - (percentProgress * 2);
+        targetVolume = (1 - (percentProgress * 2)) * self.cachedBackgroundVolume;
     } else {
-        targetVolume = -1 * (1 - (percentProgress * 2));
+        targetVolume = (-1 * (1 - (percentProgress * 2))) * self.cachedBackgroundVolume;
     }
     
     self.backgroundMusicVolume = targetVolume;
@@ -172,6 +174,7 @@ static CDBufferManager *bufferManager = nil;
         self.isCrossfading = NO;
         self.crossFadeProgress = 0.0;
         self.crossFadeTargetTrackFilePath = nil;
+        self.backgroundMusicVolume = self.cachedBackgroundVolume;
         didSwitch = NO;
         [timer invalidate];
     }
