@@ -27,7 +27,7 @@
 
 void NEON_Matrix4Mul(const float* a, const float* b, float* output )
 {
-    /*
+    
 	__asm__ volatile
 	(
 	 // Store A & B leaving room for q4-q7, which should be preserved
@@ -63,12 +63,12 @@ void NEON_Matrix4Mul(const float* a, const float* b, float* output )
 	 : // no output
 	 : "r" (output), "r" (a), "r" (b) 	// input - note *value* of pointer doesn't change
 	 : "memory", "q0", "q1", "q2", "q3", "q8", "q9", "q10", "q11", "q12", "q13", "q14", "q15" //clobber
-	 );*/
+	 );
 }
 
 void NEON_Matrix4Vector4Mul(const float* m, const float* v, float* output)
 {
-    /*
+    
 	__asm__ volatile
 	(
 	 // Store m & v - avoiding q4-q7 which need to be preserved - q0 = result
@@ -94,7 +94,7 @@ void NEON_Matrix4Vector4Mul(const float* m, const float* v, float* output)
 	 : "r" (output), "r" (m), "r" (v) 	// input - note *value* of pointer doesn't change
 	 : "memory", "q0", "q1", "q8", "q9", "q10", "q11" //clobber
 	 );
-     */
+    
 }
 
 #endif
